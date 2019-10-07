@@ -7,6 +7,8 @@ public class GravityBody : MonoBehaviour
     GravityAttractor planet;
     Rigidbody rb;
 
+    [SerializeField] bool useGravity = true;
+
     void Awake()
     {
         planet = GameObject.FindGameObjectWithTag("Planet").GetComponent<GravityAttractor>();
@@ -20,6 +22,16 @@ public class GravityBody : MonoBehaviour
     void FixedUpdate()
     {
         // Allow this body to be influenced by planet's gravity
-        planet.Attract(rb);
+        planet.Attract(rb,useGravity);
+    }
+
+    public void SetUseGravity(bool gravity)
+    {
+        useGravity = gravity;
+    }
+
+    public bool GetUseGravity()
+    {
+        return useGravity;
     }
 }

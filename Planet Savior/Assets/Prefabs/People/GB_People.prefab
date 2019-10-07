@@ -12,20 +12,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: GB_People
       objectReference: {fileID: 0}
+    - target: {fileID: 1453391881167931698, guid: a05b9bcabbb69b3489d2f47237965628,
+        type: 3}
+      propertyPath: m_TagString
+      value: People
+      objectReference: {fileID: 0}
     - target: {fileID: 7996011308502753458, guid: a05b9bcabbb69b3489d2f47237965628,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 45.48671
+      value: 37.371586
       objectReference: {fileID: 0}
     - target: {fileID: 7996011308502753458, guid: a05b9bcabbb69b3489d2f47237965628,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.919312
+      value: -11.510052
       objectReference: {fileID: 0}
     - target: {fileID: 7996011308502753458, guid: a05b9bcabbb69b3489d2f47237965628,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24.451775
+      value: 32.739628
       objectReference: {fileID: 0}
     - target: {fileID: 7996011308502753458, guid: a05b9bcabbb69b3489d2f47237965628,
         type: 3}

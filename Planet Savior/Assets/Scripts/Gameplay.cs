@@ -6,18 +6,30 @@ public class Gameplay : MonoBehaviour
 {
     [SerializeField] GameObject peoplePrefab = null;
     [SerializeField] Transform planet = null;
-    [SerializeField] float extraPlaetR = 3;
+    [SerializeField] float extraPlanetR = 1;
     [SerializeField] Transform[] obsticals = null;
 
     private void Start()
     {
-
+        StartCoroutine(SpawnRoutine());
     }
 
     private void FixedUpdate()
     {
-        Vector3 spawnPosition = RandomPointInSphere(planet.localScale.x / 2 + extraPlaetR, planet.position);
-        if(obsticals != null)
+        
+    }
+
+    private IEnumerator SpawnRoutine()
+    {
+        SpawnPeople();
+        yield return new WaitForSeconds(5f);
+        StartCoroutine(SpawnRoutine());
+    }
+
+    private void SpawnPeople()
+    {
+        Vector3 spawnPosition = RandomPointInSphere(planet.localScale.x / 2 + extraPlanetR, planet.position);
+        if (obsticals != null)
         {
             foreach (var obstical in obsticals)
             {
@@ -30,7 +42,6 @@ public class Gameplay : MonoBehaviour
         peoplePrefab.transform.position = spawnPosition;
         Instantiate(peoplePrefab);
     }
-
 
     private Vector3 RandomPointInSphere(float R, Vector3 rootPoint)
     {
