@@ -8,7 +8,7 @@ public class People : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            Debug.Log("Pick Up");
+            GameObject.Destroy(this.gameObject);
         }
     }
 }

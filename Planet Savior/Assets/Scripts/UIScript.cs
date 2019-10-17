@@ -6,19 +6,17 @@ using UnityEngine;
 
 public class UIScript : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI engineText;
     [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI capacity;
 
-
-
-    public void SetEngineStatus(bool IsEngineOn)
-    {
-        if (IsEngineOn) engineText.text = "ON";
-        else engineText.text = "OFF";
-    }
     
     public void SetScore(float score)
     {
         scoreText.text = String.Format("{0}", score);
+    }
+
+    public void SetCapacity(float capacity)
+    {
+        this.capacity.text = String.Format("{0}/{1}", capacity, 8);
     }
 }

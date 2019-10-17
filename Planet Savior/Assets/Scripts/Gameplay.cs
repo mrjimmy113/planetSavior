@@ -5,10 +5,15 @@ using UnityEngine;
 public class Gameplay : MonoBehaviour
 {
     [SerializeField] GameObject peoplePrefab = null;
-    [SerializeField] Transform planet = null;
     [SerializeField] float extraPlanetR = 1;
     [SerializeField] Transform[] obsticals = null;
+    private Transform planet = null;
 
+
+    private void Awake()
+    {
+        planet = GameObject.FindWithTag("Terrain").GetComponent<Transform>();
+    }
     private void Start()
     {
         StartCoroutine(SpawnRoutine());
