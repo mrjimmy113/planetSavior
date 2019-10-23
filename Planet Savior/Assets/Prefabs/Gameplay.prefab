@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3529567885894339672}
   m_Layer: 0
   m_Name: Gameplay
-  m_TagString: Untagged
+  m_TagString: Planet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,8 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   peoplePrefab: {fileID: 8221875445943634406, guid: 006eee85b820aa04cb9c15f934e894e1,
     type: 3}
-  planet: {fileID: 0}
-  extraPlaetR: 3
+  extraPlanetR: 1
   obsticals:
   - {fileID: 0}
   - {fileID: 0}
@@ -66,4 +65,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a7b18e92941779428f3dcc8a3a3c4c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: -9.8
+  gravity: 9.8

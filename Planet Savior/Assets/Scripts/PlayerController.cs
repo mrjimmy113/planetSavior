@@ -7,9 +7,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] GameObject planet;
-    [SerializeField] float upDownOffset = 0.1f;
+
     [SerializeField] float maxCapacity = 8f;
+
+
+    [SerializeField] float maxFuel = 100f;
+    private float currentFuel;
+    [SerializeField] float fuelDecreaseRate = 1;
+
+    [SerializeField] Light lightObject;
+    [SerializeField] float maxLight = 45f;
+    [SerializeField] float lightDecreaseRate = 0.0001f;
+    private float lightDecrease;
+
     float distanceToPlanet;
+
+    private Animator animator;
     
 
     private float rotation;
@@ -34,17 +47,32 @@ public class PlayerController : MonoBehaviour
         ui = GameObject.FindObjectOfType<UIScript>();
         distanceToPlanet = transform.position.y;
         body = GetComponent<GravityBody>();
+        animator = GetComponentInChildren<Animator>();
+
+        currentFuel = maxFuel;
+        lightObject.spotAngle = maxLight;
+        lightDecrease = lightDecreaseRate;
+        
     }
 
     void Update()
     {
-        rotation = Input.GetAxisRaw("Horizontal");
-        if (turnRight) rotation = 1;
-        if (turnLeft) rotation = -1;
-        if (flyDown)
+        rotation = 0;
+        if (Input.touchCount == 1)
         {
-            air.radius = Vector3.Distance(transform.position, planet.transform.position) - 1;
+            var touch = Input.touches[0];
+            if (touch.position.x < Screen.width / 2)
+            {
+                rotation = -1;
+            }
+            else if (touch.position.x > Screen.width / 2)
+            {
+                rotation = 1;
+            }
         }
+        //rotation = Input.GetAxis("Horizontal");
+        
+        animator.SetFloat("turnOffset", rotation);
     }
 
     void FixedUpdate()
@@ -57,8 +85,7 @@ public class PlayerController : MonoBehaviour
      
         rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, 50f * Time.deltaTime));
 
-        if (flyUp) air.radius += upDownOffset;
-
+        lightObject.spotAngle -= lightDecrease;
         
 
     }
@@ -84,36 +111,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-
-    public void TurnRight(bool isRight)
-    {
-        turnRight = isRight;
-    }
-
-    public void TurnLeft(bool isLeft)
-    {
-        turnLeft = isLeft;
-    }
-
-    public void FlyUp(bool isUp)
-    {
-        flyUp = isUp;
-    }
-
-    public void FlyDown(bool isDown)
-    {
-        if(isDown)
-        {
-            air.isTrigger = true;
-            flyDown = true;
-        }else
-        {
-            flyDown = false;
-            air.isTrigger = false;
-        }
-    }
-
     public float GetCurrentCapacity()
     {
         return currentCapacity;
@@ -125,56 +122,20 @@ public class PlayerController : MonoBehaviour
         ui.SetCapacity(currentCapacity);
     }
 
-    #region Movement theo Force
-    /*    public void TurnEngine()
-       {
-           if(body.GetUseGravity())
-           {
-               body.SetUseGravity(false);
-               boosting = true;
-               falling = false;
-               ui.SetEngineStatus(true);
-           }else
-           {
-               body.SetUseGravity(true);
-               falling = true;
-               boosting = false;
-               ui.SetEngineStatus(false);
-           }
-       }*/
-    /*  private void StablizeDistance()
-  {
-      float currentDistance = Vector3.Distance(transform.position, planet.transform.position);
-      if(currentDistance > distanceToPlanet + distanceRange)
-      {
-          Vector3 gravityVector = (transform.position - planet.transform.position).normalized;
-          rb.velocity = new Vector3(0, 0, 0);
-          boosting = false;
-          rb.AddForce(gravityVector * -stablizeForce);
-      }
+    public void SetLightDecrease(float lightDecrease)
+    {
+        this.lightDecrease = lightDecrease;
+    }
 
+    public void ResetLightDecrease()
+    {
+        this.lightDecrease = lightDecreaseRate;
+    }
 
-  }*/
+    public void ReFillLight()
+    {
+        this.lightObject.spotAngle = this.maxLight;
+    }
 
-    /*    private void Boosting()
-        {
-            if(boosting && (currentUpForce < maxUpForce))
-            {
-                Vector3 gravityVector = (transform.position - planet.transform.position).normalized;
-                currentUpForce += engineForceOffset;
-                rb.AddForce(gravityVector * currentUpForce);
-            }
-        }*/
-
-    /*    private void Falling()
-        {
-            if(falling && (currentUpForce > 1f))
-            {
-                Vector3 gravityVector = (transform.position - planet.transform.position).normalized;
-                currentUpForce -= engineForceOffset;
-                rb.AddForce(gravityVector * currentUpForce);
-            }
-        }*/
-    #endregion
 
 }
